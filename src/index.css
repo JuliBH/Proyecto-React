@@ -1,0 +1,61 @@
+body {
+  margin: 0;
+  padding: 0; 
+  overflow-x: hidden;
+}
+
+.navigationBar {
+  background-color: #E0BBE4;
+  color: black;
+  display: flex;
+}
+
+.logoImg {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  padding: 20px;
+}
+
+h1 {
+  padding-top: 60px;
+  font-family: logoFont;
+  font-size: 80px;
+}
+
+li {
+  padding-top: 8rem;
+}
+
+.btn-cart {
+  padding-top: 6.5rem;
+}
+
+.number-cart {
+  background-color: yellow;
+  border-radius: 30%;
+  font-weight: bold;
+}
+
+li:hover {
+  font-weight: bold;
+}
+
+.greeting-text {
+  background-color: #f4e6f5;
+}
+
+.itemBox {
+  width: 300px;
+  height: 550px;
+}
+
+footer {
+  background-color: #f4e6f5;
+  height: 8rem;
+  width: 100%;
+  bottom: 0; 
+  overflow: hidden; 
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
