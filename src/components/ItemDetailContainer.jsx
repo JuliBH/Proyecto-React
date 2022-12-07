@@ -1,34 +1,32 @@
 import React from "react";
 import arrayProducts from "./json/products.json";
-import ItemCount from "./ItemCount";
-import ItemList from "./ItemList";
+import ItemDetail from "./ItemDetail";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-const ItemListContainer = () => {
+const ItemDetailContainer = () => {
 
-    const [items, setItems] = useState([]);
+    const [item, setItem] = useState([]);
     const {id} = useParams();
 
     useEffect(() => {
         const promesa = new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(id ? arrayProducts.filter(item => item.category === id) : arrayProducts );
+                resolve(arrayProducts.find(item => item.id === parseInt(id)));
             }, 2000);
         });
 
         promesa.then((data) => {
-            setItems(data);
+            setItem(data);
         })
     }, [id]);
-    
+
     return (
         <div className="container">
-            <ItemList items={items} />
-            <ItemCount stock={20}/>
+        <ItemDetail item={item} />
         </div>
     )
 }
 
-export default ItemListContainer;
+export default ItemDetailContainer;
