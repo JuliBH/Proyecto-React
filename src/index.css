@@ -23,6 +23,12 @@ h1 {
   font-size: 80px;
 }
 
+h2 {
+  padding-top: 30px;
+  font-family: logoFont;
+  font-size: 60px;
+}
+
 li {
   padding-top: 8rem;
 }

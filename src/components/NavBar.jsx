@@ -20,7 +20,7 @@ const NavBar = () => {
                   <NavLink className="nav-link active" aria-current="page" activeclassname="page" to={"/category/candy"} >Candy</NavLink>
                 </li>
                 <li class="nav-item">
-                  <NavLink className="nav-link active" aria-current="page" activeclassname="page" to={"/category/drinks"}>Drinks</NavLink>
+                  <NavLink className="nav-link active" aria-current="page" activeclassname="page" to={"/category/drink"}>Drinks</NavLink>
                 </li>
                 <CartWidget />
               </ul>
