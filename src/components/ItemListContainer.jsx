@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 /* import arrayProducts from "./json/products.json"; */
-import ItemCount from "./ItemCount";
 import ItemList from "./ItemList";
 import { useParams } from "react-router-dom";
 import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
@@ -48,7 +47,6 @@ const ItemListContainer = () => {
     return (
         <div className="container">
             <ItemList items={items} />
-            <ItemCount stock={20}/>
         </div>
     )
 }
