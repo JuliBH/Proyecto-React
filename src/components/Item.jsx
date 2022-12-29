@@ -15,11 +15,8 @@ const Item = ({item}) => {
                                         <div className="bi-star-fill"></div>
                                     </div>
                                 <span className="text-muted text-decoration-line-through"></span>
-                                {item.price}
+                                ${item.price}
                             </div>
-                        </div>
-                        <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div className="text-center"><button className="cartButton btn btn-outline-dark mt-auto">Agregar al carrito</button></div>
                         </div>
                     </div>
                 </div>

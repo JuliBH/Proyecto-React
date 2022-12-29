@@ -1,8 +1,7 @@
-import React from "react";
-import arrayProducts from "./json/products.json";
+import React, { useState, useEffect } from "react";
+/* import arrayProducts from "./json/products.json"; */
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 import ItemDetail from "./ItemDetail";
-import { useState } from "react";
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const ItemDetailContainer = () => {
@@ -10,7 +9,7 @@ const ItemDetailContainer = () => {
     const [item, setItem] = useState([]);
     const {id} = useParams();
 
-    useEffect(() => {
+    /*useEffect(() => {
         const promesa = new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(arrayProducts.find(item => item.id === parseInt(id)));
@@ -20,7 +19,19 @@ const ItemDetailContainer = () => {
         promesa.then((data) => {
             setItem(data);
         })
-    }, [id]);
+    }, [id]);*/
+
+    useEffect(() => {
+        const db = getFirestore();
+        const item = doc(db, "Items", id);
+        getDoc(item).then((snapShot) => {
+            if (snapShot.exists()) {
+                setItem({id:snapShot.id, ...snapShot.data() })
+            } else {
+                console.log("Product does not exist.")
+            }
+        })
+    }, []);
 
     return (
         <div className="container">

@@ -6,7 +6,7 @@ const NavBar = () => {
     return (
         <nav class="navigationBar navbar navbar-expand-lg">
           <div class="container-fluid">
-            <Link to={"/"}> <img className="logoImg" src={"./imagenes/logo.png"} alt="logo" /> </Link>
+            <Link to={"/"}> <img className="logoImg" src={"/imagenes/logo.png"} alt="logo" /> </Link>
             <h1 className="col-md-9">Japan Store</h1>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
