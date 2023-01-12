@@ -2,6 +2,8 @@ import { addDoc, collection, getFirestore, updateDoc, doc, writeBatch, getDocs }
 import React, { useContext, useState } from "react";
 import { CartContext } from "./context/CartContext";
 
+//check check
+
 const Checkout = () => {
     const {cart, clear, sumTotal} = useContext(CartContext);
     const [name, setName] = useState("");
