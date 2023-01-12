@@ -1,4 +1,4 @@
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore, updateDoc, doc, writeBatch, getDocs } from "firebase/firestore";
 import React, { useContext, useState } from "react";
 import { CartContext } from "./context/CartContext";
 
@@ -7,13 +7,15 @@ const Checkout = () => {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
+    const [repeatEmail, setrepeatEmail] = useState("");
     const [orderId, setOrderId] = useState("");
 
-    const generarOrden = () => {
+    const generarOrden = (e) => {
+        e.preventDefault();
         const fecha = new Date();
         const order = {
-            buyer: {name:name, phone:phone, email:email},
-            items: cart.map(item => ({id:item.id, title:item.name, price:item.price})),
+            buyer: {name:name, phone:phone, email:email, repeatEmail:repeatEmail},
+            items: cart.map(item => ({id:item.id, title:item.name, quantity:item.quantity, price:item.price, total_price:item.quantity * item.price})),
             total:sumTotal(),
             order_date: `${fecha.getFullYear()}-${fecha.getMonth() + 1}-${fecha.getDate()} ${fecha.getHours()}:${fecha.getMinutes()}:${fecha.getSeconds()}`
         };
@@ -22,6 +24,25 @@ const Checkout = () => {
         const ordersCollection = collection(db, "orders");
         addDoc(ordersCollection, order).then((snapShot) => {
             setOrderId(snapShot.id);
+            const generateOrder = doc(db, "orders", snapShot.id);
+            updateDoc(generateOrder, {total:order.total * 1.21});
+
+            /* const batch = writeBatch(db);
+            const updateOrder = doc(db, "orders", snapShot.id);
+            batch.update(updateOrder, {total:10000});
+            batch.set(updateOrder, {...order, discount:sumTotal()*0.7});
+            batch.commit(); */
+
+            const ordersCollection = collection(db, "orders");
+            const batch = writeBatch(db);
+            getDocs(ordersCollection).then(results => {
+                results.docs.map(item => {
+                    let docModificado = doc(db, "orders", item.id);
+                    batch.update(docModificado, {total:item.data()["total"] * 1.10});
+                });
+                batch.commit();
+            })
+
             clear();
         });
 
@@ -44,6 +65,10 @@ const Checkout = () => {
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email:</label>
                         <input type="email" className="form-control" placeholder="Put your email adress" onInput={(e) => {setEmail(e.target.value)}} />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Repeat Email:</label>
+                        <input type="email" className="form-control" placeholder="Repeat your email adress" onInput={(e) => {setrepeatEmail(e.target.value)}} />
                     </div>
                     <button type="submit" className="btn btn-outline-dark mt-auto" onClick={generarOrden}>Generar orden</button>
                 </form>
