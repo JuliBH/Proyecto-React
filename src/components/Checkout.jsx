@@ -19,7 +19,17 @@ const Checkout = () => {
             total:sumTotal(),
             order_date: `${fecha.getFullYear()}-${fecha.getMonth() + 1}-${fecha.getDate()} ${fecha.getHours()}:${fecha.getMinutes()}:${fecha.getSeconds()}`
         };
-        
+
+        const confirmEmail = () => {
+            if (email === repeatEmail) {
+                console.log("The emails are the same")
+            } else {
+                console.log("The emails are not the same")
+                alert("The emails are not the same")
+            }
+        }
+        confirmEmail();
+
         const db = getFirestore();
         const ordersCollection = collection(db, "orders");
         addDoc(ordersCollection, order).then((snapShot) => {
