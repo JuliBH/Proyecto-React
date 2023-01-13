@@ -32,7 +32,7 @@ const Checkout = () => {
             });
         } 
         else {
-            alert("Please put the same email in both fields")
+            alert("Please put the same email in both fields.")
         }}
 
     return (
