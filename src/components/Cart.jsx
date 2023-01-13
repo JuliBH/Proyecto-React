@@ -10,7 +10,8 @@ const Cart = () => {
             <div className="container">
                 <div className="row my-5">
                     <div className="col-md-12 text-center pt-4">
-                        <div className="alert alert-danger" role="alert">Wow! Such empty!</div>
+                    <img className="pb-2" src={"/imagenes/emoji-frown.svg"} alt="empty-cart" width={50} />
+                        <p className="empty-cart-message">Wow, such empty</p>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
-import { addDoc, collection, getFirestore, updateDoc, doc, writeBatch, getDocs } from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import React, { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { CartContext } from "./context/CartContext";
 
 const Checkout = () => {
@@ -20,43 +21,19 @@ const Checkout = () => {
             order_date: `${fecha.getFullYear()}-${fecha.getMonth() + 1}-${fecha.getDate()} ${fecha.getHours()}:${fecha.getMinutes()}:${fecha.getSeconds()}`
         };
 
-        const confirmEmail = () => {
-            if (email === repeatEmail) {
-                console.log("The emails are the same")
-            } else {
-                console.log("The emails are not the same")
-                alert("The emails are not the same")
-            }
-        }
-        confirmEmail();
+        if (email === repeatEmail) {
 
-        const db = getFirestore();
-        const ordersCollection = collection(db, "orders");
-        addDoc(ordersCollection, order).then((snapShot) => {
-            setOrderId(snapShot.id);
-            const generateOrder = doc(db, "orders", snapShot.id);
-            updateDoc(generateOrder, {total:order.total * 1.21});
-
-            /* const batch = writeBatch(db);
-            const updateOrder = doc(db, "orders", snapShot.id);
-            batch.update(updateOrder, {total:10000});
-            batch.set(updateOrder, {...order, discount:sumTotal()*0.7});
-            batch.commit(); */
-
+            const db = getFirestore();
             const ordersCollection = collection(db, "orders");
-            const batch = writeBatch(db);
-            getDocs(ordersCollection).then(results => {
-                results.docs.map(item => {
-                    let docModificado = doc(db, "orders", item.id);
-                    batch.update(docModificado, {total:item.data()["total"] * 1.10});
-                });
-                batch.commit();
-            })
+            addDoc(ordersCollection, order).then((snapShot) => {
+                setOrderId(snapShot.id);
 
-            clear();
-        });
-
-    }    
+                clear();
+            });
+        } 
+        else {
+            alert("Please put the same email in both fields")
+        }}
 
     return (
         <div className="container">
@@ -80,7 +57,7 @@ const Checkout = () => {
                         <label htmlFor="email" className="form-label">Repeat Email:</label>
                         <input type="email" className="form-control" placeholder="Repeat your email adress" onInput={(e) => {setrepeatEmail(e.target.value)}} />
                     </div>
-                    <button type="submit" className="btn btn-outline-dark mt-auto" onClick={generarOrden}>Generar orden</button>
+                    <button type="submit" className="btn btn-outline-dark mt-auto" onClick={generarOrden}>Generate order</button>
                 </form>
 
                 </div>
@@ -106,7 +83,7 @@ const Checkout = () => {
             </div>
             <div className="row">
                 <div className="col text-center">
-                    {orderId !== "" ? <div className="alert alert-warning" role="alert">La orden generada es: <b>{orderId}</b></div> : ""}
+                    {orderId !== "" ? <Navigate to={"/thankyou/" + orderId} /> : ""}
                 </div>
             </div>
         </div>

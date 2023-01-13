@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Item = ({item}) => {
     return (
-        <div className="col-md-3">
+        <div className="col-md-6 col-7 col-lg-3">
             <Link to={"/item/" + item.id} className="text-dark text-decoration-none">
                 <div className="itemBox p-4" key={item.id}>
                     <div className="card h-100 shadow">
